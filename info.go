@@ -27,7 +27,7 @@ func (s *Server) HandleInfoRequest(w *Response, r *http.Request) *InfoRequest {
 	}
 
 	if ret.Code == "" {
-		w.SetError(E_INVALID_REQUEST, "")
+		w.SetError(E_INVALID_REQUEST, "invalid access token")
 		return nil
 	}
 
@@ -36,12 +36,12 @@ func (s *Server) HandleInfoRequest(w *Response, r *http.Request) *InfoRequest {
 	// load access data
 	ret.AccessData, err = w.Storage.LoadAccess(ret.Code)
 	if err != nil {
-		w.SetError(E_INVALID_REQUEST, "")
+		w.SetError(E_INVALID_REQUEST, "invalid access token")
 		w.InternalError = err
 		return nil
 	}
 	if ret.AccessData == nil {
-		w.SetError(E_INVALID_REQUEST, "")
+		w.SetError(E_INVALID_REQUEST, "invalid access token")
 		return nil
 	}
 	if ret.AccessData.Client == nil {
